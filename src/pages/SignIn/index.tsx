@@ -1,7 +1,19 @@
 import React from 'react';
 
-import { Container } from './styles';
+import Input from '../../components/Input';
+import Button from '../../components/Button';
 
-const SignIn: React.FC = () => <Container />;
+import { Container, Title } from './styles';
+
+const SignIn: React.FC = () => {
+  return (
+    <Container>
+      <Title>Sign In</Title>
+      <Input placeholder="Name" icon="mail" />
+      <Input placeholder="Password" icon="lock" />
+      <Button onPress={() => console.log('acessar')}>Acessar</Button>
+    </Container>
+  );
+};
 
 export default SignIn;

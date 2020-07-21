@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { useRef, useCallback } from 'react';
 import { ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+
+import * as Yup from 'yup';
+import { Form } from '@unform/mobile';
+import { FormHandles } from '@unform/core';
 
 import Icon from 'react-native-vector-icons/Feather';
 import Input from '../../components/Input';
@@ -15,6 +19,12 @@ import {
 } from './styles';
 
 const SignIn: React.FC = () => {
+  const formRef = useRef<FormHandles>(null);
+
+  const handleSignInSubmit = useCallback((data: object) => {
+    console.log(data);
+  }, []);
+
   return (
     <>
       <KeyboardAvoidingView
@@ -28,9 +38,17 @@ const SignIn: React.FC = () => {
         >
           <Container>
             <Title>Sign In</Title>
-            <Input placeholder="Name" icon="mail" />
-            <Input placeholder="Password" icon="lock" />
-            <Button onPress={() => console.log('acessar')}>Access</Button>
+            <Form
+              ref={formRef}
+              onSubmit={handleSignInSubmit}
+              style={{ width: '100%' }}
+            >
+              <Input placeholder="Name" icon="mail" name="email" />
+              <Input placeholder="Password" icon="lock" name="password" />
+              <Button onPress={() => formRef.current?.submitForm()}>
+                Access
+              </Button>
+            </Form>
             <ForgotPasswordButton>
               <ForgotPasswordButtonText>
                 Forgot my password

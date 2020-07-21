@@ -1,5 +1,10 @@
 import React, { useRef, useCallback } from 'react';
-import { ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import {
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+  TextInput,
+} from 'react-native';
 
 import * as Yup from 'yup';
 import { Form } from '@unform/mobile';
@@ -20,6 +25,7 @@ import {
 
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+  const passwordInputRef = useRef<TextInput>(null);
 
   const handleSignInSubmit = useCallback((data: object) => {
     console.log(data);
@@ -43,8 +49,25 @@ const SignIn: React.FC = () => {
               onSubmit={handleSignInSubmit}
               style={{ width: '100%' }}
             >
-              <Input placeholder="Name" icon="mail" name="email" />
-              <Input placeholder="Password" icon="lock" name="password" />
+              <Input
+                placeholder="Email"
+                icon="mail"
+                name="email"
+                autoCapitalize="none"
+                keyboardType="email-address"
+                autoCorrect={false}
+                returnKeyType="next"
+                onSubmitEditing={() => passwordInputRef.current?.focus()}
+              />
+              <Input
+                ref={passwordInputRef}
+                placeholder="Password"
+                icon="lock"
+                name="password"
+                secureTextEntry
+                returnKeyType="send"
+                onSubmitEditing={() => formRef.current?.submitForm()}
+              />
               <Button onPress={() => formRef.current?.submitForm()}>
                 Access
               </Button>

@@ -9,8 +9,9 @@ import {
 import * as Yup from 'yup';
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
-
 import Icon from 'react-native-vector-icons/Feather';
+import getValidationsErrors from '../../utils/getValidationErrors';
+
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 
@@ -23,12 +24,36 @@ import {
   CreateAccountButtonText,
 } from './styles';
 
+interface SignInCredentials {
+  email: string;
+  password: string;
+}
+
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const passwordInputRef = useRef<TextInput>(null);
 
-  const handleSignInSubmit = useCallback((data: object) => {
-    console.log(data);
+  const handleSignInSubmit = useCallback(async (data: SignInCredentials) => {
+    try {
+      formRef.current?.setErrors({});
+      const schema = Yup.object().shape({
+        email: Yup.string()
+          .email('Type a valid e-mail address')
+          .required('E-mail is required'),
+        password: Yup.string().required('Password is required'),
+      });
+
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        const errors = getValidationsErrors(err);
+
+        formRef.current?.setErrors(errors);
+        console.log(errors);
+      }
+    }
   }, []);
 
   return (
@@ -53,6 +78,7 @@ const SignIn: React.FC = () => {
                 placeholder="Email"
                 icon="mail"
                 name="email"
+                autoCompleteType="off"
                 autoCapitalize="none"
                 keyboardType="email-address"
                 autoCorrect={false}

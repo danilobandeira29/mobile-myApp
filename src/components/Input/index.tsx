@@ -36,6 +36,7 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
 
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
+  const [isErrored, setIsErrored] = useState(false);
 
   const handleInputFocused = useCallback(() => {
     setIsFocused(true);
@@ -65,6 +66,10 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
     });
   }, [fieldName, registerField]);
 
+  useEffect(() => {
+    setIsErrored(!!error);
+  }, [error]);
+
   useImperativeHandle(ref, () => ({
     focus() {
       inputElementRef.current?.focus();
@@ -72,7 +77,7 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
   }));
 
   return (
-    <Container isFocused={isFocused}>
+    <Container isFocused={isFocused} isErrored={isErrored}>
       <Icon name={icon} size={20} color={isFilled ? '#333' : '#666'} />
       <TextInput
         ref={inputElementRef}

@@ -4,6 +4,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   TextInput,
+  Alert,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -12,6 +13,7 @@ import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
 import Icon from 'react-native-vector-icons/Feather';
 import getValidationsErrors from '../../utils/getValidationErrors';
+import api from '../../services/api';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -30,28 +32,39 @@ const SignUp: React.FC = () => {
   const emailInputRef = useRef<TextInput>(null);
   const navigation = useNavigation();
 
-  const handleSignUpSubmit = useCallback(async (data: SignInCredentials) => {
-    try {
-      formRef.current?.setErrors({});
-      const schema = Yup.object().shape({
-        name: Yup.string().required('Name is required'),
-        email: Yup.string()
-          .email('Type a valid e-mail address')
-          .required('E-mail is required'),
-        password: Yup.string().required('Password is required'),
-      });
+  const handleSignUpSubmit = useCallback(
+    async (data: SignInCredentials) => {
+      try {
+        formRef.current?.setErrors({});
+        const schema = Yup.object().shape({
+          name: Yup.string().required('Name is required'),
+          email: Yup.string()
+            .email('Type a valid e-mail address')
+            .required('E-mail is required'),
+          password: Yup.string().required('Password is required'),
+        });
 
-      await schema.validate(data, {
-        abortEarly: false,
-      });
-    } catch (err) {
-      if (err instanceof Yup.ValidationError) {
-        const errors = getValidationsErrors(err);
+        await schema.validate(data, {
+          abortEarly: false,
+        });
 
-        formRef.current?.setErrors(errors);
+        await api.post('users', {
+          name: data.name,
+          email: data.email,
+          password: data.password,
+        });
+        Alert.alert('New account created!', 'You can now Sign In');
+        navigation.goBack();
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationsErrors(err);
+
+          formRef.current?.setErrors(errors);
+        }
       }
-    }
-  }, []);
+    },
+    [navigation],
+  );
 
   return (
     <>

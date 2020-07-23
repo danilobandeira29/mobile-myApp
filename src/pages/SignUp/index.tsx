@@ -5,6 +5,7 @@ import {
   Platform,
   TextInput,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import * as Yup from 'yup';
 import { Form } from '@unform/mobile';
@@ -23,12 +24,13 @@ interface SignInCredentials {
   password: string;
 }
 
-const SignIn: React.FC = () => {
+const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const passwordInputRef = useRef<TextInput>(null);
   const emailInputRef = useRef<TextInput>(null);
+  const navigation = useNavigation();
 
-  const handleSignInSubmit = useCallback(async (data: SignInCredentials) => {
+  const handleSignUpSubmit = useCallback(async (data: SignInCredentials) => {
     try {
       formRef.current?.setErrors({});
       const schema = Yup.object().shape({
@@ -66,7 +68,7 @@ const SignIn: React.FC = () => {
             <Title>Sign Up</Title>
             <Form
               ref={formRef}
-              onSubmit={handleSignInSubmit}
+              onSubmit={handleSignUpSubmit}
               style={{ width: '100%' }}
             >
               <Input
@@ -102,7 +104,7 @@ const SignIn: React.FC = () => {
                 Create Account
               </Button>
             </Form>
-            <GoBackButton>
+            <GoBackButton onPress={() => navigation.goBack()}>
               <Icon size={20} name="arrow-left" color="#e02041" />
               <GoBackButtonText>Go back to home</GoBackButtonText>
             </GoBackButton>
@@ -113,4 +115,4 @@ const SignIn: React.FC = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;

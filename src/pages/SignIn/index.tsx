@@ -5,6 +5,7 @@ import {
   Platform,
   TextInput,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import * as Yup from 'yup';
 import { Form } from '@unform/mobile';
@@ -32,6 +33,7 @@ interface SignInCredentials {
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const passwordInputRef = useRef<TextInput>(null);
+  const navigation = useNavigation();
 
   const handleSignInSubmit = useCallback(async (data: SignInCredentials) => {
     try {
@@ -106,7 +108,7 @@ const SignIn: React.FC = () => {
         </ScrollView>
       </KeyboardAvoidingView>
 
-      <CreateAccountButton>
+      <CreateAccountButton onPress={() => navigation.navigate('SignUp')}>
         <Icon name="log-in" size={20} color="#e02041" />
         <CreateAccountButtonText>Create Account</CreateAccountButtonText>
       </CreateAccountButton>

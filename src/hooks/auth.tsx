@@ -21,6 +21,7 @@ interface SignInCredentials {
 
 interface AuthContextData {
   signIn(credentials: SignInCredentials): Promise<void>;
+  signOut(): Promise<void>;
   user: object;
 }
 
@@ -60,8 +61,14 @@ const AuthProvider: React.FC = ({ children }) => {
     setData({ token, user });
   }, []);
 
+  const signOut = useCallback(async () => {
+    await AsyncStorage.multiRemove(['@myapp:token', '@myapp:user']);
+
+    setData({} as AuthState);
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ signIn, user: data.user }}>
+    <AuthContext.Provider value={{ signIn, signOut, user: data.user }}>
       {children}
     </AuthContext.Provider>
   );

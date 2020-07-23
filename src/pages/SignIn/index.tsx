@@ -4,6 +4,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   TextInput,
+  Alert,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -60,7 +61,13 @@ const SignIn: React.FC = () => {
           const errors = getValidationsErrors(err);
 
           formRef.current?.setErrors(errors);
+          return;
         }
+
+        Alert.alert(
+          'Authentication error!',
+          'Your credentials do not match an account in our system.',
+        );
       }
     },
     [signIn],

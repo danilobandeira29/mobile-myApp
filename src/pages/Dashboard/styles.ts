@@ -8,6 +8,6 @@ export const Container = styled.View`
 `;
 
 export const Text = styled.Text`
-  font-size: 40;
+  font-size: 40px;
   font-family: 'RobotoSlab-Medium';
 `;

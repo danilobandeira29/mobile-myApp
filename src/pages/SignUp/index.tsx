@@ -66,7 +66,13 @@ const SignUp: React.FC = () => {
           const errors = getValidationsErrors(err);
 
           formRef.current?.setErrors(errors);
+          return;
         }
+
+        Alert.alert(
+          'Error!',
+          'An error occurred while trying to create a new account, please try again.',
+        );
       }
     },
     [navigation],

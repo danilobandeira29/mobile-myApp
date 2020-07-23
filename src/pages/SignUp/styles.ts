@@ -16,7 +16,7 @@ export const Title = styled.Text`
   margin-bottom: 30px;
 `;
 
-export const CreateAccountButton = styled.TouchableOpacity`
+export const GoBackToSignInButton = styled.TouchableOpacity`
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -31,7 +31,7 @@ export const CreateAccountButton = styled.TouchableOpacity`
   border-top-color: #333;
 `;
 
-export const CreateAccountButtonText = styled.Text`
+export const GoBackToSignInButtonText = styled.Text`
   margin-left: 10px;
 
   font-size: 16px;

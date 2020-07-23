@@ -12,6 +12,7 @@ import * as Yup from 'yup';
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
 import Icon from 'react-native-vector-icons/Feather';
+
 import getValidationsErrors from '../../utils/getValidationErrors';
 import api from '../../services/api';
 
@@ -21,8 +22,8 @@ import Button from '../../components/Button';
 import {
   Container,
   Title,
-  CreateAccountButton,
-  CreateAccountButtonText,
+  GoBackToSignInButton,
+  GoBackToSignInButtonText,
 } from './styles';
 
 interface SignInCredentials {
@@ -122,12 +123,12 @@ const SignUp: React.FC = () => {
                 Create Account
               </Button>
             </Form>
-            <CreateAccountButton onPress={() => navigation.goBack()}>
+            <GoBackToSignInButton onPress={() => navigation.goBack()}>
               <Icon name="arrow-left" size={20} color="#e02041" />
-              <CreateAccountButtonText>
+              <GoBackToSignInButtonText>
                 Go back to Sign In
-              </CreateAccountButtonText>
-            </CreateAccountButton>
+              </GoBackToSignInButtonText>
+            </GoBackToSignInButton>
           </Container>
         </ScrollView>
       </KeyboardAvoidingView>

@@ -18,7 +18,12 @@ import api from '../../services/api';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 
-import { Container, Title, GoBackButton, GoBackButtonText } from './styles';
+import {
+  Container,
+  Title,
+  CreateAccountButton,
+  CreateAccountButtonText,
+} from './styles';
 
 interface SignInCredentials {
   name: string;
@@ -117,10 +122,12 @@ const SignUp: React.FC = () => {
                 Create Account
               </Button>
             </Form>
-            <GoBackButton onPress={() => navigation.goBack()}>
-              <Icon size={20} name="arrow-left" color="#e02041" />
-              <GoBackButtonText>Go back to home</GoBackButtonText>
-            </GoBackButton>
+            <CreateAccountButton onPress={() => navigation.goBack()}>
+              <Icon name="arrow-left" size={20} color="#e02041" />
+              <CreateAccountButtonText>
+                Go back to Sign In
+              </CreateAccountButtonText>
+            </CreateAccountButton>
           </Container>
         </ScrollView>
       </KeyboardAvoidingView>

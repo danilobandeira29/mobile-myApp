@@ -12,4 +12,5 @@ export const Container = styled.TouchableOpacity`
 export const ButtonText = styled.Text`
   font-size: 18px;
   color: white;
+  font-family: 'RobotoSlab-Regular';
 `;

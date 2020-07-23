@@ -1,6 +1,8 @@
 import styled from 'styled-components/native';
 import { Platform } from 'react-native';
 
+import { getBottomSpace } from 'react-native-iphone-x-helper';
+
 export const Container = styled.View`
   flex: 1;
   justify-content: center;
@@ -14,20 +16,25 @@ export const Title = styled.Text`
   margin-bottom: 30px;
 `;
 
-export const GoBackButton = styled.TouchableOpacity`
+export const CreateAccountButton = styled.TouchableOpacity`
   flex-direction: row;
-  width: 100%;
-  background-color: transparent;
-  align-items: center;
   justify-content: center;
-  height: 60px;
-  margin-top: 20px;
-  padding: 16px 0;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 0 ${16 + getBottomSpace()}px;
+
+  border-top-width: 1px;
+  border-style: solid;
+  border-top-color: #333;
 `;
-export const GoBackButtonText = styled.Text`
-  color: #333;
+
+export const CreateAccountButtonText = styled.Text`
+  margin-left: 10px;
+
   font-size: 16px;
   font-family: 'RobotoSlab-Regular';
-
-  margin-left: 10px;
+  color: #333;
 `;
